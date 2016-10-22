@@ -16,6 +16,12 @@ public class SingletonInvoker {
 		System.out.println("Singleton thread safe" + singleton);
 	}
 
+	static void callSingletonThreadSafeElegant() {
+		SingletonThreadSafeElegant singleton = SingletonThreadSafeElegant.getInstance();
+		System.out.println("Singleton thread safe elegant" + singleton);
+
+	}
+
 	public static void main(String[] args) {
 		ExecutorService service = Executors.newFixedThreadPool(2);
 		service.submit(SingletonInvoker::callSingletonNotThreadSafe);
@@ -27,6 +33,10 @@ public class SingletonInvoker {
 		service2.submit(SingletonInvoker::callSingletonThreadSafe);
 		service2.shutdown();
 
-	}
+		ExecutorService service3 = Executors.newFixedThreadPool(2);
+		service3.submit(SingletonInvoker::callSingletonThreadSafeElegant);
+		service3.submit(SingletonInvoker::callSingletonThreadSafeElegant);
+		service3.shutdown();
 
+	}
 }
