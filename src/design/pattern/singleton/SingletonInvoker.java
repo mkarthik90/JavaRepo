@@ -22,6 +22,12 @@ public class SingletonInvoker {
 
 	}
 
+	static void callSingletonEnum() {
+		SingletonEnum singleton = SingletonEnum.Instance;
+		System.out.println("Singleton thread safe elegant" + singleton.hashCode());
+
+	}
+
 	public static void main(String[] args) {
 		ExecutorService service = Executors.newFixedThreadPool(2);
 		service.submit(SingletonInvoker::callSingletonNotThreadSafe);
@@ -38,5 +44,9 @@ public class SingletonInvoker {
 		service3.submit(SingletonInvoker::callSingletonThreadSafeElegant);
 		service3.shutdown();
 
+		ExecutorService service4 = Executors.newFixedThreadPool(2);
+		service4.submit(SingletonInvoker::callSingletonEnum);
+		service4.submit(SingletonInvoker::callSingletonEnum);
+		service4.shutdown();
 	}
 }
